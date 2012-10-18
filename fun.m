@@ -8,9 +8,7 @@ observedV = renormalize(expand(A*sum(vHat, 2), basis));
 observedVTrun = renormalize(expand(A*sum(vHat(:, 1:4), 2), basis));
 [~, coeffVTrun] = expand(sum(observedVTrun, 2), basis);
 
-coeffV
-coeffVTrun
-
-diff = (coeffV - coeffVTrun)'
+diff = (coeffV - coeffVTrun)';
+diff = diff(1:4);
 error = sqrt(diff'*diff);
 end
