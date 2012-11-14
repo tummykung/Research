@@ -8,9 +8,7 @@ nck = length(list);
 A = zeros(nck);
 
 for i = 1:nck;
-   
     A(i,i) = 1 - all(ismember(notSet, list(i, :)));
-    
 end
 
 

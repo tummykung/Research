@@ -1,23 +1,26 @@
-function lab1
-n = 10;
-k = 5;
-r = 1;  % get rid of the first r highest frequency elements
+function [s, t] = lab1(n, k, r)
+
+%n = 10;
+%k = 5;
+%r = 3;  % the r-th order effect
 nck = nchoosek(n, k);
-list = nchoosek(1:n, k);
-v = ones(nck, 1);
+v = rand(nck, 1);
 
 [B, V] = eig(adjacency_matrix(n, k));
 
-B = fliplr(B);
-V = fliplr(V);
-
-O = orderIndex(diag(V));
-
-notSet = list(5);
+list_nr = nchoosek(1:n, r);
+rand_notSet_index = randi(length(list_nr));
+notSet = list_nr(rand_notSet_index, :);
 A = observe(n, k, notSet);
 
-%decomposedV = decompose(v, B);
-%decomposedV = sum(decomposedV(r + 1: end, :));
-%highestFreqIndex(decomposedV, B, 1e-5)
+decomposedV = decompose(v, B);
+
+v = restrictOrder(v, B, r, diag(V));
+%v = sum(decomposedV(:, OI(2):end), 2);
+
+zeroThresh = 1e-5;
+
+s = highestOrder(v, B, zeroThresh, diag(V));
+t = highestOrder(A * v, B, zeroThresh, diag(V));
 
 end

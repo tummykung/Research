@@ -1,0 +1,362 @@
+\documentclass[10pt,reqno]{amsart}
+\usepackage{amsmath,times,hyperref}
+\usepackage{amsthm, amssymb, amsfonts, mathrsfs, float, booktabs, subfigure, boxedminipage, bbold}
+\usepackage{latexsym}
+\usepackage{graphicx}
+%%  Renewed
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\Re}[1]{\operatorname{Re} #1}
+\renewcommand{\Im}[1]{\operatorname{Im} #1}
+%\renewcommand{\sech}{\operatorname{sech}}
+\linespread{1.2}
+
+%% New Commands
+\newcommand{\dD}{\partial \mathbb{D}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\ran}{\operatorname{ran}}
+\newcommand{\norm}[1]{\| #1 \|}
+\newcommand{\inner}[1]{\left< #1 \right>}
+\newcommand{\blf}{ {[\,\cdot\, , \,\cdot\,]} }
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\dom}{\mathcal{D}}
+\newcommand{\pc}{\perp_C}
+\newcommand{\vecspan}{\operatorname{span}}
+\newcommand{\interior}{\operatorname{int}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\tr}{\operatorname{tr}}
+%%  Matrices
+\newcommand{\minimatrix}[4]{\begin{pmatrix} #1 & #2 \\ #3 & #4 \end{pmatrix}  }
+\newcommand{\megamatrix}[9]{\begin{pmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9\end{pmatrix}  }
+
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\newcommand{\twovector}[2]{\begin{pmatrix} #1\\#2 \end{pmatrix} }
+\newcommand{\threevector}[3]{\begin{pmatrix} #1\\#2\\#3 \end{pmatrix} }
+
+\renewcommand{\vec}[1]{{\bf #1}}
+
+\newcommand{\varnot}{\sim\!\!}
+\newcommand{\due}[1]{\vspace{-0.2in}\begin{center}\textsc{due at the beginning of class \underline{#1}} \end{center}\medskip }
+
+
+%%%
+%%% Theorem Styles
+%%%
+\newtheorem{Result}{Result}
+\newtheorem{Proposition}{Proposition}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Theorem}{Theorem}
+\newtheorem*{Thm}{Theorem}
+\newtheorem{Postulate}{Postulate}
+\newtheorem{Lemma}{Lemma}
+\theoremstyle{definition}
+\newtheorem*{Definition}{Definition}
+\newtheorem*{Example}{Example}
+\newtheorem*{Remark}{Remark}
+\newtheorem{Exercise}{Exercise}
+\newtheorem*{Question}{Question}
+
+
+\allowdisplaybreaks
+%\newcounter{ex}[section]
+
+
+
+%\numberwithin{section}{chapter}
+%\numberwithin{Theorem}{chapter}
+\numberwithin{equation}{section}
+%\numberwithin{Example}{chapter}
+
+%%
+%% MAIN DOCUMENT
+%%
+\begin{document}
+\title{Machine learning on $k$-set of $n$ sets}
+\author{Tum Chaturapruek, Jeremy Usatine, 
+\\Professor Susan Martonosi, Professor Michael Orrison} 
+\maketitle
+
+\begin{abstract}
+We use similar techniques from Huang's thesis to 
+work on our problem. The hard part
+is to translate between them.
+\end{abstract}
+
+
+%------------------------------------------------------ 
+\section{Introduction}
+We first review Jonathan Huang's thesis.
+\subsection{From Chapters 1-4}
+\begin{enumerate}
+\item  distribution on the symmetric group:
+mutually exclusivity constraints
+\[h(\sigma(i) = \sigma(j)) = 0,\]
+whenever $i\neq j.$
+\item Hidden Markov Model (HMM):
+\[h(\sigma^{(1), \ldots, \sigma^{(T)}, 
+z^{(1)}, \ldots, z^{(T)}})
+=
+h(\sigma^{(1)}) h(z^{(1)}|\sigma^{(1)})
+\prod_{t=2}^T h(z^t|\sigma^{(t)}) h(\sigma^{(t)}|\sigma^{t-1}),
+\]
+where the $\sigma^{(i)}$ are latent permutations, and
+the $z^{(i)}$ are observed variables.
+\end{enumerate}
+\subsection{From Chapter 5}
+We begin with the following theorem.
+
+\noindent\textbf{Definition:} A \textit{representation} of a group $G$
+is a map $\rho$ from $G$ to a set of
+invertible $d_\rho\times d_\rho$ (complex)
+matrix operators ($\rho:G\to \C^{d_\rho\times d_\rho}$)
+which preserves algebraic structure.
+
+We consider three types of representations in this paper
+\begin{enumerate}
+\item trivial representation (maps everything to 
+1). Although trivial, it is still important.
+\item The first-order permutation representation:
+$[\tau_{(n-1, 1)(\sigma)}]_{ij}
+= \mathbb{1}\{\sigma(j) = i\}
+$
+\item The alteration representation
+\[\rho_{(1,1,1, \ldots, 1)}\]
+which maps to $\pm 1$ based on the parity of
+the permutation.
+\end{enumerate}
+
+\noindent \textbf{Theorem} (James Submodule Theorem).
+The marginals corresponding to ``simple'' partition
+will require very few Fouries coefficients to compute.
+\begin{enumerate}
+\item  First-order marginal probability:
+$\lambda = (n-1, 1).$
+\item  Second-order marginal probability:
+$\lambda = (n-2, 2).$
+\end{enumerate}
+
+\begin{enumerate}
+\item (uniqueness) For each partition $\lambda$ of $n$,
+there exists an irreducible representation
+$\rho_\lambda$ which is unique.
+\item (completeness) Every irreducible representation
+of $S_n$ corresponds to some partition of $n$.
+\item There exists a matrix $C_\lambda$ 
+associates with each partition $\lambda$ for which
+\[C_{\lambda}^T \tau_\lambda (\sigma) C_\lambda
+=
+\oplus_{\mu \unrhd \lambda}\oplus_{l=1}^{k_{\lambda,\mu}} \rho_{\mu}(\sigma)\]
+for all $\sigma\in S_n.$
+\end{enumerate}
+
+
+\noindent \textbf{Theorem} (Peter-Weyl Theorem).
+The matrix entries of the irreducibles
+of $G$ form a complete set of orthogonal
+basis functions on $G$.
+
+
+\noindent \textbf{Definition} (Fourier Transform).
+For the probability distribution $h:G\to \R$
+\[\hat{h}_\rho = \sum_\sigma h(\sigma)\rho(\sigma).\]
+
+\noindent \textbf{Theorem} (Fourier Inversion Theorem).
+We have
+\[h(\sigma) = \frac{1}{|G|}\sum_{\lambda}
+d_{\rho_\lambda} \text{Tr}[\hat{h}^T\cdot \rho_\lambda(\sigma)],\]
+where $\lambda$ indexes over the collection
+of irreducibles of $G$.
+
+\textit{Remark}: The trace can be though of as the inverse
+if the representations are unitary, 
+i.e., $\rho(\sigma)^{-1} = \rho(\sigma)^T.$ To
+see this in more details,
+let 
+\[A =
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix},
+B =
+\begin{bmatrix}
+e & f\\
+g & h
+\end{bmatrix}.
+\]
+We have $A\,.*B = ae + bf + cg + dh = \text{Tr}(AB^T).$
+
+\noindent \textbf{Definition} (Dominance Ordering).
+Let $\lambda, \mu$ be partitions of $n$. Then 
+$λ \unrhd µ$ (we say $\lambda$ dominates $\mu$),
+if for each $i$, 
+\[\sum_{k=1}^i \lambda_k \geq \sum_{k=1}^i \mu_k.\]
+For example, $(4,2)\unrhd (3,2,1).$
+Note that high dominance ordering 
+corresponds to low frequency, and vice versa.
+%------------------------------------------------------ 
+\subsection{From Chapter 6 (Tableaux Combinatorics
+and Algorithms)}
+\begin{enumerate}
+\item  The dimension of the irreducible 
+representation $\rho_\lambda$ can be 
+indexed by a collection of the 
+standard Young tableaux.
+\item Clausen's FFT algorithm.
+\item The Gel'fand-Tsetlin basis.
+\end{enumerate}
+
+
+\section{Our thoughts}
+We have
+\begin{equation}
+V = S^{(n)}\bigoplus S^{(n-1, 1)} \bigoplus
+\cdots \oplus S^{(n-k,k)}.
+\end{equation}
+Each space can be thought of pure $i$-th
+order effect.
+
+Idea: embed out space $V$
+into a bigger space $S_n$.
+Then break it down to irreducibles.
+Then pull it back.
+
+Some keywords/more ideas
+\begin{enumerate}
+\item spherical groups
+\item replace $x$ by $G_x$
+\item young ? homogeneous groups
+\item Gelfand pair
+\item Clebsch-Gordan series.
+\end{enumerate}
+
+From part 8, we note that,
+a Kronecker (Tensor) Product Representation.
+If $\rho_\lambda$ and $\rho_\mu$ are any
+two irreducibles of $G$, there exists a similarity
+transform $C_{\lambda\mu}$ (Clebsch-Gordan coefficients) such that, for any
+$\sigma\in G$
+\[C_{\lambda\mu}^{-1}\cdot[\rho_\lambda\otimes\rho_mu]
+\cdot C_{\lambda\mu}
+=
+\bigoplus_{\nu}\bigoplus_{l=1}^{z_{\lambda\mu\nu}}
+\rho_\nu(\sigma),
+\]
+where $z_{\lambda\mu\nu}$ is known 
+as Clebsch-Gordan series.
+
+\subsection{Research Meeting on November 1, 2012}
+Some notes from Huang: 
+\begin{enumerate}
+\item Proposition 11. Page 29 in pdf 
+of Huang 2009 (about 
+$[\hat{fg}]_{\rho_\nu}$
+in terms of the sum of the tensor products
+of $\hat{f}_{\rho_\lambda}\otimes \hat{g}_{\rho_\mu}$.
+
+\item Theorem 30 (Murnaghan's formulas)  (page 65 in pdf) Let $\rho_1,\rho_2$ be the irreducibles corresponding to the partition 
+$(n - p, \lambda_2 ,...)$ and
+$(n - q, \mu_2 ,...)$ respectively. Then the product
+$\rho_1\otimes \rho_2$ does not contain any irreducibles corresponding to a partition whose first term is less than $n - p - q$.
+\end{enumerate}
+
+Let $G = S_n$ and $H = \{1,2,3,\ldots, k\}.$
+We can think $\C[G/H]$ and $\C[G]$
+as $\C G$-modules.
+
+Suppose $\overline{g}, \overline{f}\in \C[G/H],$
+$\phi:\overline{f}\mapsto g\in \C[G]$ defined by
+\[\phi(\overline{f})(x) = \overline{f}(xH)\]
+
+The inverse map is $\psi:f\to \C[G/H]$ defined by
+\[\psi(f)(xH) = \frac{1}{|H|}\sum_{y\in H}f(y)\]
+
+\noindent \textbf{Theorem} (Shur's Lemma).
+Let $T:U\to U'$ be a $\C G$-module homormorphism,
+and suppose $U,U'$ are irreducibles. Then,
+\[T=
+0 \text{ if } U\not\cong U',
+\]
+or $T$ is an isomorphism if $T\neq 0.$
+In our case, we have
+\begin{equation}
+\label{map}
+\C[G/H]\xrightarrow{\phi}\C[G]\xrightarrow{\text{DFT}}
+\hat{\C[G]}.
+\end{equation}
+Then, to pull back, we need
+\[\hat{\C[G]}\xrightarrow{\text{Theorems, DFT}^{-1}}\C[G]\xrightarrow{\psi}
+\hat{\C[G/H]}.\]
+Thus, the main idea here is to never leave the Fourier
+space.
+
+\subsection{Some notes prepared 
+for research meeting on November 8, 2012}
+If $f\in \C[G]$ is a $j$-th order observation on
+the nonzero Fourier coefficients correspond to
+irreducibles indexed by 
+\[(n-r, r)\]
+with $r\leq j.$
+
+Def: $f$ is a $j$-th order probability distribution
+if it is fully defined by unordered $j$-th order marginal distribution.
+
+1. Suppose $f, g\in \C[S_n]$ and $\hat{f}, \hat{g}$ are the FTs.
+
+If $[\hat{f}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq j$
+and
+$[\hat{g}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq i$
+then
+$[\hat{fg}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq j + i$.
+
+2. Suppose $u,v \in \C$[$k$-set of an $n$-set],
+$u$ is the $i$-th order, v is the $j$-th order.
+Then,
+\[uv = fg \{1, 2, 3, \ldots, k\}\]
+for $f$ and $g$ as above.
+
+
+\subsection{Meeting on November 8, 2012}
+\begin{enumerate}
+\item Gelfand pair
+\item Harmonic analysis. Double cosets:
+\[KgK = \bigcup_{k\in K} (kg)K,\]
+also denoted as $S_2\Sigma_3/S_2.$
+\item When someone mentions something like
+a spherical Fourier transform, think
+of the computational time. Is there
+an analogy like FT and FFT?
+\item $S_K\times S_{n-k}$ multiplicities free.
+\item The operation $\varphi$ and 
+DFT in the Diagram.~\eqref{map} have
+to work together to get
+\[\hat{\C[G]}\cong
+A_1\oplus A_2\oplus A_3\cdots \oplus A_n,\]
+where $A_i$ only has the first column
+nonzero. Each column is irreducible representation
+of the group algebra.
+\item Gelfand pair. Embed in a clever way.
+Can embed on $\C[G/H]$ to our group.
+\item spherical functions via random walks
+on groups.
+\end{enumerate}
+
+%\nocite{*}
+%\bibliographystyle{plain}
+%\bibliography{bib1}
+\end{document}
