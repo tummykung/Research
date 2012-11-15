@@ -219,24 +219,7 @@ standard Young tableaux.
 \end{enumerate}
 
 
-\section{Observation in $k$-set of $n$ sets}
-
-\subsection{Observation}
-Let $G$ be a finite group that acts on finite set $X$. Let $Z$ be a random variable that takes on values of $X$. Let $f: X \to \R$ be defined by
-\[
-	f(x) = P(Z = x) \qquad \text{for $x \in X$}.
-\]
-Then $f$ is a probability distribution on $X$. Suppose we observe event $A$ and we want to update our probability distribution. Then we want to calculate
-\begin{align*}
-	P(Z = x \, | \, A) &= \frac{P(A \, | \, Z = x) P(Z = x)}{ P( A )}\\
-	&= c g(x) f(x),
-\end{align*}
-where $c = 1/P(A) \in \R$ is a constant and $g: X \to \R$ is defined by $g(x) = P(A \, | \, Z = x)$.\\
-If we calculate $gf$, re-normalizing to get a probability distribution on $X$ will give us $P(Z = x \, | \, A)$.\\
-Therefore to update $f$ after observing event $A$, we need only consider calculating the point-wise product of two real valued functions on $X$.
-
-
-\subsection{Introduction}
+\section{Our thoughts}
 We have
 \begin{equation}
 V = S^{(n)}\bigoplus S^{(n-1, 1)} \bigoplus
@@ -274,17 +257,23 @@ $\sigma\in G$
 where $z_{\lambda\mu\nu}$ is known 
 as Clebsch-Gordan series.
 
+\subsection{Notes from Huang's Thesis}
+\begin{enumerate}
+\item Proposition 11. Page 29 in pdf 
+of Huang 2009 (about 
+$[\widehat{f\cdot g}]_{\rho_\nu}$
+in terms of the sum of the tensor products
+of $\widehat{f}_{\rho_\lambda}\otimes \widehat{g}_{\rho_\mu}$.
 
-\begin{Theorem}[Murnaghan's formulas]
+\item 
 \label{thm30}
-(page 65 in pdf) Let $\rho_1,\rho_2$ be the irreducibles corresponding to the partition 
+Theorem 30 (Murnaghan's formulas)  (page 65 in pdf) Let $\rho_1,\rho_2$ be the irreducibles corresponding to the partition 
 $(n - p, \lambda_2 ,...)$ and
 $(n - q, \mu_2 ,...)$ respectively. Then the product
 $\rho_1\otimes \rho_2$ does not contain any irreducibles corresponding to a partition whose first term is less than $n - p - q$.
-\end{Theorem}
-\subsection{Embedding $\C[G/H]$ in $\C[G]$}
-%-----
-Let $G$ and $H$ be groups with $H\leq G.$
+\end{enumerate}
+\subsection{Embedding $\C[S_n/H]$ in $\C[S_n]$}
+Let $G = S_n$ and $H = \{1,2,3,\ldots, k\}.$
 We can think $\C[G/H]$ and $\C[G]$
 as $\C G$-modules.
 %-----
@@ -296,29 +285,13 @@ The inverse map is $\psi:f\to \C[G/H]$ defined by
 \[\psi(f)(xH) = \frac{1}{|H|}\sum_{y\in xH}f(y)\]
 We can check that they are inverses.
 
-Also,
-\begin{equation}
-\label{preserve}
-f\cdot g = \psi(\varphi(f)\cdot \varphi(g)).
-\end{equation}
-This is true because $\phi(fg)(xH)
-=(fg)(xH) = f(xH)g(xH)= \varphi(f)\varphi(g)(xH),$
-and so $\psi(\varphi(f)\cdot \varphi(g))
-= \psi(\varphi(fg)) = fg.$
-So $\psi$ might relate to the pull-back?
-Maybe averaging is the right idea?
-
-
-\begin{Theorem}[Shur's Lemma]
-\label{shur}
+\noindent \textbf{Theorem} (Shur's Lemma).
 Let $T:U\to U'$ be a $\C G$-module homormorphism,
 and suppose $U,U'$ are irreducibles. Then,
 \[T=
 0 \text{ if } U\not\cong U',
 \]
 or $T$ is an isomorphism if $T\neq 0.$
-\end{Theorem}
-%----------
 In our case, we have
 \begin{equation}
 \label{map}
@@ -331,12 +304,99 @@ Then, to pull back, we need
 Thus, the main idea here is to never leave the Fourier
 space.
 
+\subsection{Some notes prepared 
+for research meeting on November 8, 2012}
+If $f\in \C[G]$ is a $j$-th order observation on
+the nonzero Fourier coefficients correspond to
+irreducibles indexed by 
+\[(n-r, r)\]
+with $r\leq j.$
 
-\begin{Proposition}
-Let $G$ be a group and $H \lhd G$.
-Then $\phi$ is a $\C G$ module homomorphism.
-\end{Proposition}
-\begin{proof}
+Def: $f$ is a $j$-th order probability distribution
+if it is fully defined by unordered $j$-th order marginal distribution.
+
+1. Suppose $f, g\in \C[S_n]$ and $\widehat{f}, \widehat{g}$ are the FTs.
+
+If $[\widehat{f}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq j$
+and
+$[\widehat{g}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq i$
+then
+$[\widehat{fg}]_{\rho_r}$ is zero for all
+$\lambda\neq (n-r, r)$ for all $r\leq j + i$.
+
+2. Suppose $u,v \in \C$[$k$-set of an $n$-set],
+$u$ is the $i$-th order, v is the $j$-th order.
+Then,
+\[uv = fg \{1, 2, 3, \ldots, k\}\]
+for $f$ and $g$ as above.
+
+
+\subsection{Meeting on November 8, 2012}
+\begin{enumerate}
+\item Gelfand pair
+\item Harmonic analysis. Double cosets:
+\[KgK = \bigcup_{k\in K} (kg)K,\]
+also denoted as $S_2\backslash S_3/S_2.$
+Have at most $|S_2|\times |S_2|$ elements.
+\item When someone mentions something like
+a spherical Fourier transform, think
+of the computational time. Is there
+an analogy like FT and FFT?
+\item $S_K\times S_{n-k}$ multiplicities free.
+\item The operation $\varphi$ and 
+DFT in the Diagram.~\eqref{map} have
+to work together to get
+\[\widehat{\C[G]}\cong
+A_1\oplus A_2\oplus A_3\cdots \oplus A_n,\]
+where $A_i$ only has the first column
+nonzero. Each column is irreducible representation
+of the group algebra.
+\item Gelfand pair. Embed in a clever way.
+Can embed on $\C[G/H]$ to our group.
+\item spherical functions via random walks
+on groups.
+\item Think about spilling (observation) and massaging (pull-back).
+Suppose $f\in \C[G/H].$
+Consider the embeded map
+$f\to \overline{f}\in \C[G]$.
+If 
+\[\overline{f} = f_0 + f_1 + f_2 + \ldots
++ f_k + \underbrace{ f_{k+1} + \ldots}_{\text{all zeros}} \]
+(recall $f_0$ is a part of the pure zero-th order
+effect, and so on). Is that already embedded in $\psi$?
+Also,
+\begin{equation}
+\label{preserve}
+f\cdot g = \psi(\varphi(f)\cdot \varphi(g)).
+\end{equation}
+This is true because $\phi(fg)(xH)
+=(fg)(xH) = f(xH)g(xH)= \varphi(f)\varphi(g)(xH),$
+and so $\psi(\varphi(f)\cdot \varphi(g))
+= \psi(\varphi(fg)) = fg.$
+So $\psi$ might relate to the pull-back?
+Maybe averaging is the right idea?
+\end{enumerate}
+
+\subsection{Preparation for Meeting on November 15, 2012}
+We start with the follow-up notion on 
+Gelfand pair.\\
+\textbf{Definition}:
+The pair $(G, H)$ with
+$H\leq G$ is called a \textit{Gelfand pair}
+if any irreducible representation of $G$
+is included in $\C[G/H]$ with 
+multiplicity at most 1.
+
+\subsection{Notes from Jeremy}
+Let $G$ be a group and $H \lhd G$.\\\\
+Define $\phi: \C[G/H] \to \C[G]$ by
+\[
+	\phi(f)(x) = f(xH),
+\]
+for $f \in \C[G/H], x\in G$.\\\\
+We show that $\phi$ is a $\C G$ module homomorphism.\\
 Let $f, g \in \C[G/H]$ and $x \in G$. Then
 \[
 	\phi(f+g)(x) = f(xH) + g(xH) = (\phi(f)+\phi(g))(x).
@@ -350,6 +410,11 @@ Let $y \in G \subset \C G$. Then
 	\phi(yf)(x) = yf(xH) = f(y^{-1}xH) = \phi(f)(y^{-1}x) = y\phi(f)(x).
 \]
 Because all elements of $\C G$ are linear combinations of elements of $G$, this shows that $\phi$ is a module homomorphism.\\\\
+Define $\psi: \C[G] \to \C[G/H]$ by
+\[
+	\psi(f)(xH) = \frac{1}{|H|} \sum_{y \in xH} f(y),
+\]
+for $f \in \C[G]$ and $x \in G$.\\\\
 We show that $\psi$ is a $\C G$ module homomorphism.\\
 Let $f,g \in \C[G]$ and $x \in G$. Then
 \[
@@ -365,10 +430,10 @@ Let $z \in G$. Then
 	&= \frac{1}{|H|} \sum_{y \in z^{-1}xH} f(y) = \psi(f)(z^{-1}xH) = z\psi(f)(xH).
 \end{align*}
 Because all elements of $\C G$ are linear combinations of elements of $G$, this shows that $\psi$ is a module homomorphism.
-\end{proof}
 
-\begin{Lemma}
-\label{first_lemma}
+
+
+\subsection{(1)}
 We have
 \[\widehat{f\cdot g}
 =
@@ -394,10 +459,7 @@ then
 \[
 [\widehat{f\cdot g}]_{\rho_\nu} = 0.
 \]
-
-\end{Lemma}
-\begin{Lemma}
-\label{second_lemma}
+\subsection{(2)}
 Recall that $z_{\lambda\mu\nu}$
 is the number of copies of $\rho_\lambda$
 in $\rho_{\mu}\otimes \rho_\nu.$
@@ -409,27 +471,16 @@ with $r < n-i-j$ then $z_{\lambda\mu\nu} = 0.$
 
 Let $f \in \C[S_n]$. Then we say $f$ is $i$th order if $\hat{f}_{\rho_\lambda} = 0$ for any partition $\lambda = (r, \ldots)$ such that $r < n-i$.
 
-\end{Lemma}
-
-\begin{Proposition}
-If $f,g \in \C[S_n]$ are $i$-th order and $j$-th order, respectively, then the point-wise product $f\cdot g$ is $(i+j)$-th order.
-\end{Proposition}
-\begin{proof}
+We show that if $f,g \in \C[S_n]$ are $i$-th order and $j$-th order, respectively, then the point-wise product $fg$ is $(i+j)$-th order.\\
 Consider any partition $\nu$ of the form $(r, \ldots)$ such that $r < n-i-j$. \\
 Because $f,g$ are $i,j$th order, respectively, if $\hat{f}_{\rho_\lambda} \neq 0$ and $\hat{g}_{\rho_\mu} \neq 0$, then $z_{\lambda\mu\nu} = 0$.\\
 Thus $[\widehat{fg}]_{\rho_\nu} = 0$. Therefore $fg$ is $(i+j)$th order.
 
-
-Let $G = S_n$ and $H = S_{k}\times S_{n-k}$.
-From Eq.\eqref{preserve} and Shur's lemma \eqref{shur},
+From Eq.\eqref{preserve} and Shur's lemma,
 we know that $\psi$ preserves the 
-order, since it is a module
-homomorphism. Hence we conclude that
-$f\cdot g$
+order. Hence we conclude that
+\[f\cdot g\]
 is also $(i+j)$-th order.
-
-\end{proof}
-
 
 %\nocite{*}
 %\bibliographystyle{plain}
